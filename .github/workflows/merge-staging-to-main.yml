@@ -20,5 +20,5 @@ jobs:
           MERGE_URL=$(gh pr create --base main --head staging \
             --title "AUTOMERGE - staging -> main" \
             --body "Merges stating into main for scheduled release" \
-            --reviewer ${{ reviewers }})
+            --reviewer ${{ inputs.reviewers }})
           gh pr merge $MERGE_URL -m --admin
