@@ -14,7 +14,6 @@ jobs:
   merge:
     name: Merge
     runs-on: ubuntu-latest
-    env:
     steps:
       - name: git checkout main
         uses: actions/checkout@v2
