@@ -1,0 +1,24 @@
+name: Merge staging into main
+on:
+  workflow_call:
+    inputs:
+      reviewers:
+        type: string
+        description: |
+          A list of GitHub usernames to request review from.
+jobs:
+  merge:
+    name: Merge
+    runs-on: ubuntu-latest
+    steps:
+      - name: git checkout main
+        uses: actions/checkout@v2
+      - name: Open pull request and merge
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEPENDENCY_AUTOMATION }}
+        run: |
+          MERGE_URL=$(gh pr create --base main --head staging \
+            --title "AUTOMERGE - staging -> main" \
+            --body "Merges stating into main for scheduled release" \
+            --reviewer ${{ reviewers }})
+          gh pr merge $MERGE_URL -m --admin
