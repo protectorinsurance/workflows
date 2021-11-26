@@ -14,14 +14,21 @@ jobs:
     name: Merge
     runs-on: ubuntu-latest
     steps:
-      - name: git checkout main
-        uses: actions/checkout@v2
+
       - name: Open pull request and merge
         env:
           GITHUB_TOKEN: ${{ secrets.token }}
         run: |
-          MERGE_URL=$(gh pr create --base main --head staging \
-            --title "AUTOMERGE - staging -> main" \
-            --body "Merges stating into main for scheduled release" \
-            --reviewer ${{ inputs.reviewers }})
+          {
+            # TRY TO CREATE PR
+            MERGE_URL=$(gh pr create --base main --head staging \
+                        --title "AUTOMERGE - staging -> main" \
+                        --body "Merges stating into main for scheduled release" \
+                        --reviewer ${{ inputs.reviewers }})
+          } || {
+            # HANDLE EXCEPTION
+            echo "Could not create PR"
+            exit 0
+          }
+
           gh pr merge $MERGE_URL -m --admin
