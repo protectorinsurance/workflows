@@ -5,17 +5,22 @@ on:
       reviewers:
         required: true
         type: string
+    secrets:
+      github_token:
+        required: true
+        type: string
 
 jobs:
   merge:
     name: Merge
     runs-on: ubuntu-latest
+    env:
     steps:
       - name: git checkout main
         uses: actions/checkout@v2
       - name: Open pull request and merge
         env:
-          GITHUB_TOKEN: ${{ secrets.DEPENDENCY_AUTOMATION }}
+          GITHUB_TOKEN: ${{ secrets.github_token }}
         run: |
           MERGE_URL=$(gh pr create --base main --head staging \
             --title "AUTOMERGE - staging -> main" \
