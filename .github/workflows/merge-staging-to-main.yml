@@ -8,7 +8,6 @@ on:
     secrets:
       github_token:
         required: true
-        type: string
 
 jobs:
   merge:
