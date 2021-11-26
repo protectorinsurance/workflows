@@ -17,9 +17,8 @@ jobs:
       - name: git checkout main
         uses: actions/checkout@v2
       - name: Open pull request and merge
-        env:
-          GITHUB_TOKEN: ${{ secrets.github_token }}
         run: |
+          gh auth login --with-token "${{ secrets.github_token }}"
           MERGE_URL=$(gh pr create --base main --head staging \
             --title "AUTOMERGE - staging -> main" \
             --body "Merges stating into main for scheduled release" \
