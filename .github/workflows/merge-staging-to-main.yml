@@ -27,8 +27,7 @@ jobs:
                         --reviewer ${{ inputs.reviewers }})
           } || {
             # HANDLE EXCEPTION
-            echo "Could not create PR"
+            echo "Could not create PR - Probably nothing to release"
             exit 0
           }
-
           gh pr merge $MERGE_URL -m --admin
