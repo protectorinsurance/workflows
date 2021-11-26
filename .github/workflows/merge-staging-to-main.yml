@@ -3,9 +3,9 @@ on:
   workflow_call:
     inputs:
       reviewers:
+        required: true
         type: string
-        description: |
-          A list of GitHub usernames to request review from.
+
 jobs:
   merge:
     name: Merge
